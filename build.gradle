@@ -14,7 +14,7 @@ repositories {
 
 ext {
 	springVersion = '3.2.4.RELEASE'
-	tilesVersion = '2.2.2'
+	tilesVersion = '3.0.1'
 
 	slf4jVersion = '1.7.5'
 	logbackVersion = '1.0.13'
