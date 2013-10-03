@@ -7,7 +7,7 @@ apply plugin: 'jacoco'
 apply plugin: 'findbugs'
 apply plugin: 'pmd'
 
-version = 1.0
+apply from: 'dynamicVersion.gradle'
 
 sourceCompatibility = 1.6
 targetCompatibility = 1.6

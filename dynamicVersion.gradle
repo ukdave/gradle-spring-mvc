@@ -1,0 +1,76 @@
+/*
+ * This work is licensed under the Creative Commons Attribution 3.0 Unported License.
+ *
+ * To view a copy of this license, visit http://creativecommons.org/licenses/by/3.0/
+ * or send a letter to Creative Commons, 444 Castro Street, Suite 900, Mountain View, California, 94041, USA.
+ */
+ 
+/* Define your version here. */
+version = new Version(project: project, major: 1, minor: 0).toString()
+ 
+/*
+ * Print the version.
+ */
+task printVersion {
+	doFirst {
+		println "$project.version"
+	}
+}
+
+/**
+ * <p>
+ * Implementation of a dynamic version for gradle builds that
+ * includes a git commit hash.
+ * </p>
+ * <p>
+ * Based on <a href="https://gist.github.com/jabbrwcky/3999533">dyamicVersion.gradle</a> by <a href="https://github.com/jabbrwcky">Jens Hausherr</a>.
+ * </p>
+ *
+ * @author David Bull <a href="https://github.com/ukdave">ukdave@github</a>
+ */
+class Version {
+	/* Reference to current gradle project */
+	Project project
+	
+	/* Version number components, major and minor are required, the rest is optional. */
+	int major, minor, revision, patch
+	 
+	/**
+	 * Wrapper for git execution.
+	 *
+	 * @param gitArgs list of arguments to the git executable
+	 * @return output of command
+	 */
+	def git(List gitArgs) {
+		def stdout = new ByteArrayOutputStream()
+
+		project.exec {
+			executable = 'git'
+			args = gitArgs
+			standardOutput = stdout
+		}
+	 
+		return stdout
+	}
+
+	/**
+	 * Returns the version string.
+	 *
+	 * @return version string
+	 */
+	String toString() {
+		def version = "$major.$minor"
+
+		// Resolves the git revision
+		def output = git([ "rev-parse", "--short", "HEAD" ])
+
+		def commitMatcher = output =~ /([0-9a-f]{7})/
+		def commit = commitMatcher[0][1]
+		
+		if (commit) {
+			version += "-$commit"
+		}
+		 
+		return version
+	}
+}
