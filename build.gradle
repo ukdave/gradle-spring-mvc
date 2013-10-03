@@ -3,6 +3,10 @@ apply plugin: 'war'
 apply plugin: 'jetty'
 apply plugin: 'eclipse-wtp'
 
+apply plugin: 'jacoco'
+apply plugin: 'findbugs'
+apply plugin: 'pmd'
+
 version = 1.0
 
 sourceCompatibility = 1.6
@@ -54,8 +58,21 @@ dependencies {
 	runtime "ch.qos.logback:logback-classic:$logbackVersion"
 }
 
-test {
-	testLogging.showStandardStreams = true
+//test {
+//	testLogging.showStandardStreams = true
+//}
+
+findbugs {
+	ignoreFailures = true
+}
+
+pmd {
+	toolVersion = '5.0.5'
+}
+
+jacocoTestReport {
+	group = 'Reporting'
+	description = 'Generate Jacoco coverage reports after running tests.'
 }
 
 eclipse {
