@@ -46,6 +46,9 @@
 			<div class="starter-template">
 				<tiles:insertAttribute name="content" />
 			</div>
+			<div class="footer">
+				<p><fmt:message key="app.version" /></p>
+			</div>
     	</div><!-- /.container -->
 
 

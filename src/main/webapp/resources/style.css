@@ -4,3 +4,8 @@ body {
 .starter-template {
 	padding: 40px 15px;
 }
+.footer {
+	color: #aaa;
+	font-size: small;
+	text-align: center;
+}
